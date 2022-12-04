@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  TweetViewController.swift
 //  MyTwitterApp
 //
 //  Created by setoon on 2022/12/03.
@@ -8,6 +8,6 @@
 import Foundation
 import UIKit
 
-class SearchViewController: UIViewController{
+class TweetViewController: UIViewController{
     
 }
