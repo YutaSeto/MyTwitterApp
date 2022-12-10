@@ -12,6 +12,7 @@ import RealmSwift
 class MainViewController: UIViewController{
     
     var tweetList:[TweetModel] = []
+    var TweetList: Results<TweetModel>!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tweetButton: UIButton!
@@ -19,7 +20,7 @@ class MainViewController: UIViewController{
         let storyboard = UIStoryboard(name: "TweetViewController", bundle: nil)
         guard let tweetViewController = storyboard.instantiateInitialViewController() as? TweetViewController else {return}
         tweetViewController.delegate = self
-        present(tweetViewController, animated: true)
+        present(tweetViewController,animated: true)
     }
     
     override func viewDidLoad() {
@@ -27,6 +28,9 @@ class MainViewController: UIViewController{
         tableView.register(UINib(nibName:"MainTableViewCell",bundle: nil), forCellReuseIdentifier: "customCell")
         configureTweetButton()
         tableView.dataSource = self
+        tableView.delegate = self
+        let realm = try! Realm()
+        self.TweetList = realm.objects(TweetModel.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,5 +78,27 @@ extension MainViewController: UITableViewDataSource{
 extension MainViewController: TweetViewControllerDelegate{
     func updateTweet() {
         setTweet()
+    }
+}
+
+extension MainViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let targetTweet = tweetList[indexPath.row]
+        let realm = try! Realm()
+        try! realm.write{
+            realm.delete(targetTweet)
+        }
+        tweetList.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "TweetViewController", bundle: nil)
+        let tweetViewController = storyboard.instantiateViewController(identifier: "TweetViewController") as! TweetViewController
+        let tweetData = tweetList[indexPath.row]
+        tweetViewController.delegate = self
+        tweetViewController.tweetIndexPath = indexPath.row
+        tweetViewController.configure(deta: tweetData)
+        present(tweetViewController,animated: true)
     }
 }

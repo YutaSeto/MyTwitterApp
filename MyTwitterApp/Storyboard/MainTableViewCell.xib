@@ -16,20 +16,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="328" height="71"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DPc-GY-VAV">
-                        <rect key="frame" x="10" y="5" width="47" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DPc-GY-VAV">
+                        <rect key="frame" x="10" y="5" width="47" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="m7H-SJ-rIN"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="tweet:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-V1-2g6">
-                        <rect key="frame" x="10" y="36" width="308" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tweet:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-V1-2g6">
+                        <rect key="frame" x="10" y="40" width="308" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udJ-MX-dwH">
-                        <rect key="frame" x="279" y="5" width="39" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udJ-MX-dwH">
+                        <rect key="frame" x="279" y="7" width="39" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -40,10 +43,12 @@
                     <constraint firstItem="A7i-V1-2g6" firstAttribute="leading" secondItem="DPc-GY-VAV" secondAttribute="leading" id="76A-LC-pbi"/>
                     <constraint firstAttribute="trailing" secondItem="A7i-V1-2g6" secondAttribute="trailing" constant="10" id="BB6-Ku-wmd"/>
                     <constraint firstItem="udJ-MX-dwH" firstAttribute="centerY" secondItem="DPc-GY-VAV" secondAttribute="centerY" id="CPg-FN-PQz"/>
+                    <constraint firstItem="udJ-MX-dwH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="Esb-ha-38R"/>
                     <constraint firstItem="A7i-V1-2g6" firstAttribute="top" secondItem="DPc-GY-VAV" secondAttribute="bottom" constant="10" id="a6L-LQ-lXi"/>
+                    <constraint firstItem="DPc-GY-VAV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="bEo-Qd-q3c"/>
+                    <constraint firstItem="A7i-V1-2g6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="bdi-ep-uN3"/>
                     <constraint firstItem="DPc-GY-VAV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="cwU-x9-XXP"/>
                     <constraint firstAttribute="trailing" secondItem="udJ-MX-dwH" secondAttribute="trailing" constant="10" id="ifG-sk-Opb"/>
-                    <constraint firstItem="DPc-GY-VAV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="j2b-R5-11k"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

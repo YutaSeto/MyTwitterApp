@@ -17,6 +17,7 @@ class TweetViewController: UIViewController{
     
     var maxLength: Int = 140
     var nowLength: Int = 0
+    var tweetIndexPath: Optional<Int> = nil
     
     @IBOutlet weak var tweetLabel: UITextField!
     @IBOutlet weak var nameLabel: UITextField!
@@ -26,8 +27,8 @@ class TweetViewController: UIViewController{
         tapAddButton()
     }
     @IBOutlet weak var maxLengthLabel: UILabel!
-    
     @IBOutlet weak var nowLengthLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBarButton()
@@ -35,8 +36,12 @@ class TweetViewController: UIViewController{
         nowLength = tweetLabel.text!.count
         nowLengthLabel.text = String(maxLength - nowLength)
         tweetLabel.delegate = self
+        configure(deta:tweetData)
+        displayData()
+        self.TweetList = realm.objects(TweetModel.self)
     }
     
+    var TweetList: Results<TweetModel>!
     var tweetData = TweetModel()
     let realm = try! Realm()
     
@@ -47,6 +52,17 @@ class TweetViewController: UIViewController{
         return dateFormatter
     }
     
+    func configure(deta: TweetModel){
+        tweetData.name = deta.name
+        tweetData.tweet = deta.tweet
+        tweetData.date = deta.date
+    }
+    
+    func displayData(){
+        nameLabel.text = tweetData.name
+        tweetLabel.text = tweetData.tweet
+    }
+    
     func setNavigationBarButton(){
         let buttonActionSelector: Selector = #selector(tapAddButton)
         let rightBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: buttonActionSelector)
@@ -55,15 +71,22 @@ class TweetViewController: UIViewController{
     
     @objc func tapAddButton(){
         if maxLength - nowLength >= 0 {
-            
-            try! realm.write{
-                tweetData.name = nameLabel.text!
-                tweetData.tweet = tweetLabel.text!
-                tweetData.date = Date()
-                realm.add(tweetData)
+            if tweetIndexPath != nil{
+                try! realm.write{
+                    TweetList[Int(tweetIndexPath!)].name = nameLabel.text!
+                    TweetList[Int(tweetIndexPath!)].tweet = tweetLabel.text!
+                    TweetList[Int(tweetIndexPath!)].date = Date()
+                }
+            }else{
+                
+                try! realm.write{
+                    tweetData.name = nameLabel.text!
+                    tweetData.tweet = tweetLabel.text!
+                    tweetData.date = Date()
+                    realm.add(tweetData)
+                }
             }
             delegate?.updateTweet()
-            print(tweetLabel.text!.count)
             dismiss(animated: true)
         } else {
             let alertController:UIAlertController = UIAlertController(title: "文字数が140文字を超えています", message: "文字数を減らして再度入力してください", preferredStyle: .alert)
