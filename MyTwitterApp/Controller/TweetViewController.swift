@@ -17,7 +17,7 @@ class TweetViewController: UIViewController{
     
     var maxLength: Int = 140
     var nowLength: Int = 0
-    var tweetIndexPath: Optional<Int> = nil
+    var tweet: TweetModel?
     
     @IBOutlet weak var tweetLabel: UITextField!
     @IBOutlet weak var nameLabel: UITextField!
@@ -38,10 +38,10 @@ class TweetViewController: UIViewController{
         tweetLabel.delegate = self
         configure(deta:tweetData)
         displayData()
-        self.tweetResults = realm.objects(TweetModel.self)
+        self.tweetList = realm.objects(TweetModel.self)
     }
     
-    var tweetResults: Results<TweetModel>!
+    var tweetList: Results<TweetModel>!
     var tweetData = TweetModel()
     let realm = try! Realm()
     
@@ -71,11 +71,11 @@ class TweetViewController: UIViewController{
     
     @objc func tapAddButton(){
         if maxLength - nowLength >= 0 {
-            if tweetIndexPath != nil{
+            if tweet != nil{
                 try! realm.write{
-                    tweetResults[Int(tweetIndexPath!)].name = nameLabel.text!
-                    tweetResults[Int(tweetIndexPath!)].tweet = tweetLabel.text!
-                    tweetResults[Int(tweetIndexPath!)].date = Date()
+                    tweet!.name = nameLabel.text!
+                    tweet!.tweet = tweetLabel.text!
+                    tweet!.date = Date()
                 }
             }else{
                 
