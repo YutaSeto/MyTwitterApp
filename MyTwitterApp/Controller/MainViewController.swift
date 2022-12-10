@@ -97,7 +97,8 @@ extension MainViewController: UITableViewDelegate{
         let tweetViewController = storyboard.instantiateViewController(identifier: "TweetViewController") as! TweetViewController
         let tweetData = tweetList[indexPath.row]
         tweetViewController.delegate = self
-        tweetViewController.tweetIndexPath = indexPath.row
+
+        tweetViewController.tweet = tweetList[indexPath.row]
         tweetViewController.configure(deta: tweetData)
         present(tweetViewController,animated: true)
     }

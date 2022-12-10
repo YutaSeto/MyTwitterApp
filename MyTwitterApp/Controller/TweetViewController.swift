@@ -17,7 +17,8 @@ class TweetViewController: UIViewController{
     
     var maxLength: Int = 140
     var nowLength: Int = 0
-    var tweetIndexPath: Optional<Int> = nil
+
+    var tweet: TweetModel?
     
     @IBOutlet weak var tweetLabel: UITextField!
     @IBOutlet weak var nameLabel: UITextField!
@@ -70,35 +71,36 @@ class TweetViewController: UIViewController{
     }
     
     @objc func tapAddButton(){
-        if maxLength - nowLength >= 0 {
-            if tweetIndexPath != nil{
-                try! realm.write{
-                    TweetList[Int(tweetIndexPath!)].name = nameLabel.text!
-                    TweetList[Int(tweetIndexPath!)].tweet = tweetLabel.text!
-                    TweetList[Int(tweetIndexPath!)].date = Date()
-                }
-            }else{
-                
-                try! realm.write{
-                    tweetData.name = nameLabel.text!
-                    tweetData.tweet = tweetLabel.text!
-                    tweetData.date = Date()
-                    realm.add(tweetData)
-                }
-            }
-            delegate?.updateTweet()
-            dismiss(animated: true)
-        } else {
+        if maxLength < nowLength {
             let alertController:UIAlertController = UIAlertController(title: "文字数が140文字を超えています", message: "文字数を減らして再度入力してください", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title:"やり直す",style: .cancel){action in
                 return
             }
             alertController.addAction(cancelAction)
             present(alertController, animated: true)
-            
+            return
         }
+
+        if let tweet = tweet { // 更新
+            try! realm.write {
+                tweet.name = nameLabel.text!
+                tweet.tweet = tweetLabel.text!
+                tweet.date = Date()
+            }
+        } else { // 追加
+            let tweet = TweetModel()
+            tweet.name = nameLabel.text!
+            tweet.tweet = tweetLabel.text!
+            tweet.date = Date()
+
+            try! realm.write {
+                realm.add(tweet)
+            }
+        }
+
+        delegate?.updateTweet()
+        dismiss(animated: true)
     }
-    
 }
 
 extension TweetViewController: UITextFieldDelegate{
