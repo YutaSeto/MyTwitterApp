@@ -37,7 +37,7 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XL6-Kw-daq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XL6-Kw-daq" userLabel="Tweet Button">
                                 <rect key="frame" x="283" y="659" width="60" height="60"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <constraints>
@@ -49,6 +49,9 @@
                                 <buttonConfiguration key="configuration" style="plain" title="+">
                                     <fontDescription key="titleFontDescription" type="system" pointSize="40"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tweetButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nHW-8Q-puM"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -65,8 +68,8 @@
                     <tabBarItem key="tabBarItem" title="Item" id="KzT-jP-1d0"/>
                     <navigationItem key="navigationItem" id="CyE-OX-XEY"/>
                     <connections>
-                        <outlet property="addButton" destination="XL6-Kw-daq" id="1Cg-aH-KLX"/>
                         <outlet property="tableView" destination="BKP-ZH-0Fo" id="KeR-R5-wtt"/>
+                        <outlet property="tweetButton" destination="XL6-Kw-daq" id="73Q-6X-7nV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
