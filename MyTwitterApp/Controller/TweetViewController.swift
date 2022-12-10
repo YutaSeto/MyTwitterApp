@@ -38,10 +38,10 @@ class TweetViewController: UIViewController{
         tweetLabel.delegate = self
         configure(deta:tweetData)
         displayData()
-        self.TweetList = realm.objects(TweetModel.self)
+        self.tweetResults = realm.objects(TweetModel.self)
     }
     
-    var TweetList: Results<TweetModel>!
+    var tweetResults: Results<TweetModel>!
     var tweetData = TweetModel()
     let realm = try! Realm()
     
@@ -73,9 +73,9 @@ class TweetViewController: UIViewController{
         if maxLength - nowLength >= 0 {
             if tweetIndexPath != nil{
                 try! realm.write{
-                    TweetList[Int(tweetIndexPath!)].name = nameLabel.text!
-                    TweetList[Int(tweetIndexPath!)].tweet = tweetLabel.text!
-                    TweetList[Int(tweetIndexPath!)].date = Date()
+                    tweetResults[Int(tweetIndexPath!)].name = nameLabel.text!
+                    tweetResults[Int(tweetIndexPath!)].tweet = tweetLabel.text!
+                    tweetResults[Int(tweetIndexPath!)].date = Date()
                 }
             }else{
                 
