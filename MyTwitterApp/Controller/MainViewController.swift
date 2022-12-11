@@ -11,8 +11,8 @@ import RealmSwift
 
 class MainViewController: UIViewController{
     
-    var tweetList:[TweetModel] = []
-    var TweetList: Results<TweetModel>!
+    private var tweetList:[TweetModel] = []
+    private var TweetList: Results<TweetModel>!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tweetButton: UIButton!

@@ -13,14 +13,14 @@ protocol TweetViewControllerDelegate {
     func updateTweet()
 }
 
-class TweetViewController: UIViewController, UITextViewDelegate{
+class TweetViewController: UIViewController{
     
     var maxLength: Int = 140
     var nowLength: Int = 0
     var tweet: TweetModel?
     
     var tweetList: Results<TweetModel>!
-    var tweetData = TweetModel()
+    private var tweetData = TweetModel()
     
     let realm = try! Realm()
     
@@ -74,6 +74,7 @@ class TweetViewController: UIViewController, UITextViewDelegate{
         tweetTextView.layer.borderColor = UIColor.lightGray.cgColor
         tweetTextView.layer.opacity = 0.3
         tweetTextView.layer.cornerRadius = 5
+        tweetTextView.textColor = UIColor.black
     }
     
     func setNavigationBarButton(){
@@ -114,8 +115,8 @@ class TweetViewController: UIViewController, UITextViewDelegate{
     
 }
 
-extension TweetViewController: UITextFieldDelegate{
-    func textFieldDidChangeSelection(_ textField: UITextField){
+extension TweetViewController: UITextViewDelegate{
+    func textViewDidChangeSelection(_ tweetTextView: UITextView) {
         nowLength = tweetTextView.text!.count
         nowLengthLabel.text = String(maxLength - nowLength)
     }
