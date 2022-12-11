@@ -13,37 +13,43 @@ protocol TweetViewControllerDelegate {
     func updateTweet()
 }
 
-class TweetViewController: UIViewController{
+class TweetViewController: UIViewController, UITextViewDelegate{
     
     var maxLength: Int = 140
     var nowLength: Int = 0
     var tweet: TweetModel?
     
-    @IBOutlet weak var tweetLabel: UITextField!
-    @IBOutlet weak var nameLabel: UITextField!
+    var tweetList: Results<TweetModel>!
+    var tweetData = TweetModel()
+    
+    let realm = try! Realm()
+    
     var delegate: TweetViewControllerDelegate?
+    
+    @IBOutlet weak var tweetTextView: UITextView!
+    @IBOutlet weak var nameLabel: UITextField!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var maxLengthLabel: UILabel!
+    @IBOutlet weak var nowLengthLabel: UILabel!
+    
     @IBAction func addButton(_ sender: UIButton) {
         tapAddButton()
     }
-    @IBOutlet weak var maxLengthLabel: UILabel!
-    @IBOutlet weak var nowLengthLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBarButton()
         maxLengthLabel.text = String(maxLength)
-        nowLength = tweetLabel.text!.count
+        nowLength = tweetTextView.text!.count
         nowLengthLabel.text = String(maxLength - nowLength)
-        tweetLabel.delegate = self
+        tweetTextView.delegate = self
         configure(deta:tweetData)
+        configureTextView()
         displayData()
         self.tweetList = realm.objects(TweetModel.self)
+        
     }
-    
-    var tweetList: Results<TweetModel>!
-    var tweetData = TweetModel()
-    let realm = try! Realm()
+
     
     var dateFormatter: DateFormatter{
         let dateFormatter = DateFormatter()
@@ -60,7 +66,14 @@ class TweetViewController: UIViewController{
     
     func displayData(){
         nameLabel.text = tweetData.name
-        tweetLabel.text = tweetData.tweet
+        tweetTextView.text = tweetData.tweet
+    }
+    
+    func configureTextView(){
+        tweetTextView.layer.borderWidth = 0.8
+        tweetTextView.layer.borderColor = UIColor.lightGray.cgColor
+        tweetTextView.layer.opacity = 0.3
+        tweetTextView.layer.cornerRadius = 5
     }
     
     func setNavigationBarButton(){
@@ -74,14 +87,14 @@ class TweetViewController: UIViewController{
             if tweet != nil{
                 try! realm.write{
                     tweet!.name = nameLabel.text!
-                    tweet!.tweet = tweetLabel.text!
+                    tweet!.tweet = tweetTextView.text!
                     tweet!.date = Date()
                 }
             }else{
                 
                 try! realm.write{
                     tweetData.name = nameLabel.text!
-                    tweetData.tweet = tweetLabel.text!
+                    tweetData.tweet = tweetTextView.text!
                     tweetData.date = Date()
                     realm.add(tweetData)
                 }
@@ -103,7 +116,7 @@ class TweetViewController: UIViewController{
 
 extension TweetViewController: UITextFieldDelegate{
     func textFieldDidChangeSelection(_ textField: UITextField){
-        nowLength = tweetLabel.text!.count
+        nowLength = tweetTextView.text!.count
         nowLengthLabel.text = String(maxLength - nowLength)
     }
 }
